@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 's';
+    src: url('s.ttf') format('truetype');
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+#textInput {
+    margin-bottom: 10px;
+}

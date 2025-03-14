@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>편지 작성기</title>
+    <style>
+        @font-face {
+            font-family: 's';
+            src: url('s.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 's', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        #canvas {
+            border: 1px solid black;
+            max-width: 100%;
+            height: auto;
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            font-family: 's', Arial, sans-serif;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>편지 작성기</h1>
+    <textarea id="textInput" placeholder="여기에 텍스트를 입력하세요"></textarea>
+    <button onclick="drawText()">텍스트 추가</button>
+    <canvas id="canvas" width="600" height="800"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
