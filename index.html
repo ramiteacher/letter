@@ -30,63 +30,40 @@
 
         textarea {
             width: 100%;
-            max-width: 800px;
-            height: 800px;
+            max-width: 800px; /* 너비를 넓게 수정 */
+            height: 700px; /* 높이를 길게 수정 */
             font-family: 's', Arial, sans-serif;
             font-size: 16px;
             box-sizing: border-box;
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            resize: none;
+            padding: 10px; /* 입력 상자 내부 여백 추가 */
+            border-radius: 8px; /* 모서리를 둥글게 수정 */
+            border: 1px solid #ddd; /* 테두리 색상 수정 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
         }
 
         button {
             margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            padding: 10px 20px; /* 버튼 크기 조정 */
+            font-size: 16px; /* 버튼 글자 크기 조정 */
+            border: none; /* 버튼 테두리 제거 */
+            border-radius: 5px; /* 버튼 모서리를 둥글게 수정 */
+            background-color: #007BFF; /* 버튼 배경색 수정 */
+            color: white; /* 버튼 글자색 수정 */
+            cursor: pointer; /* 커서 모양 변경 */
+            transition: background-color 0.3s ease; /* 버튼 배경색 전환 효과 추가 */
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #0056b3; /* 버튼 호버 시 배경색 변경 */
         }
     </style>
 </head>
 <body>
     <h1>편지 작성기</h1>
-    <textarea id="textInput" placeholder="여기에 텍스트를 입력하세요" oninput="adjustFontSize()"></textarea>
+    <textarea id="textInput" placeholder="여기에 텍스트를 입력하세요"></textarea>
     <button onclick="drawText()">텍스트 추가</button>
     <canvas id="canvas" width="600" height="800"></canvas>
 
-    <script>
-        function adjustFontSize() {
-            const textarea = document.getElementById('textInput');
-            const maxFontSize = 16;
-            const minFontSize = 10;
-            const maxLength = 1000; // 최대 글자 수
-
-            const length = textarea.value.length;
-            const newFontSize = Math.max(minFontSize, maxFontSize - (length / maxLength) * (maxFontSize - minFontSize));
-            
-            textarea.style.fontSize = newFontSize + 'px';
-        }
-
-        function drawText() {
-            const canvas = document.getElementById('canvas');
-            const ctx = canvas.getContext('2d');
-            const text = document.getElementById('textInput').value;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스 초기화
-            ctx.font = '16px s';
-            ctx.fillText(text, 10, 50);
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
