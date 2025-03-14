@@ -30,15 +30,31 @@
 
         textarea {
             width: 100%;
-            max-width: 600px;
-            height: 200px;
+            max-width: 800px; /* 너비를 넓게 수정 */
+            height: 400px; /* 높이를 길게 수정 */
             font-family: 's', Arial, sans-serif;
             font-size: 16px;
             box-sizing: border-box;
+            padding: 10px; /* 입력 상자 내부 여백 추가 */
+            border-radius: 8px; /* 모서리를 둥글게 수정 */
+            border: 1px solid #ddd; /* 테두리 색상 수정 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
         }
 
         button {
             margin-top: 10px;
+            padding: 10px 20px; /* 버튼 크기 조정 */
+            font-size: 16px; /* 버튼 글자 크기 조정 */
+            border: none; /* 버튼 테두리 제거 */
+            border-radius: 5px; /* 버튼 모서리를 둥글게 수정 */
+            background-color: #007BFF; /* 버튼 배경색 수정 */
+            color: white; /* 버튼 글자색 수정 */
+            cursor: pointer; /* 커서 모양 변경 */
+            transition: background-color 0.3s ease; /* 버튼 배경색 전환 효과 추가 */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* 버튼 호버 시 배경색 변경 */
         }
     </style>
 </head>
