@@ -13,25 +13,32 @@
         body {
             font-family: 's', Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            justify-content: flex-start;
+            min-height: 100vh;
             box-sizing: border-box;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
         }
 
         #canvas {
             border: 1px solid black;
             max-width: 100%;
             height: auto;
+            margin-top: 20px;
         }
 
         textarea {
             width: 100%;
             max-width: 800px;
-            height: 500px; /* 기본 높이 */
+            min-height: 100px;
             font-family: 's', Arial, sans-serif;
             font-size: 16px;
             box-sizing: border-box;
@@ -39,6 +46,8 @@
             border-radius: 8px;
             border: 1px solid #ddd;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            resize: none;
+            overflow: hidden;
         }
 
         button {
@@ -60,7 +69,7 @@
         .preview-container {
             display: flex;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 20px;
             gap: 20px; /* 카드 간격 추가 */
         }
 
@@ -68,7 +77,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0 10px;
             cursor: pointer;
         }
 
@@ -99,14 +107,20 @@
 
         @media (max-width: 600px) {
             textarea {
-                height: 600px; /* 모바일 화면에서 높이를 더 높게 설정 */
+                width: 100%;
+                min-height: 200px;
+            }
+
+            .preview-card img {
+                width: 80px;
+                height: 40px;
             }
         }
     </style>
 </head>
 <body>
     <h1>편지 작성기</h1>
-    <textarea id="textInput" placeholder="여기에 텍스트를 입력하세요"></textarea>
+    <textarea id="textInput" placeholder="여기에 텍스트를 입력하세요" oninput="autoResize(this)"></textarea>
     <div>
         <label for="fontSize">글자 크기:</label>
         <input type="range" id="fontSize" min="20" max="100" value="30" oninput="updateFontSize(this.value)">
