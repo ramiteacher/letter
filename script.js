@@ -99,79 +99,31 @@ function drawText() {
     }
 }
 
-// 이미지 URL 복사 기능 수정
+// 이미지 URL 복사 기능
 function copyImageUrl() {
     const canvas = document.getElementById('canvas');
     
-    // 더 작은 크기의 캔버스 생성
-    const scaleFactor = 0.5; // 크기를 50%로 줄임
-    const smallerCanvas = document.createElement('canvas');
-    const smallerCtx = smallerCanvas.getContext('2d');
-    
-    // 축소된 크기 설정
-    smallerCanvas.width = canvas.width * scaleFactor;
-    smallerCanvas.height = canvas.height * scaleFactor;
-    
-    // 원본 캔버스 내용을 축소하여 그리기
-    smallerCtx.drawImage(canvas, 0, 0, smallerCanvas.width, smallerCanvas.height);
-    
-    // 캔버스를 이미지 URL로 변환 (jpeg 형식 및 낮은 품질)
-    const imageUrl = smallerCanvas.toDataURL('image/jpeg', 0.5); // 품질 50%로 설정
+    // 캔버스를 이미지 URL로 변환 (png 형식)
+    const imageUrl = canvas.toDataURL('image/png');
     
     // 클립보드에 URL 복사
     navigator.clipboard.writeText(imageUrl)
         .then(() => {
             // 복사 성공 알림 표시
             const notification = document.getElementById('copyNotification');
-            notification.textContent = '축소된 이미지 URL이 복사되었습니다!';
             notification.style.display = 'block';
             
             // 3초 후 알림 숨기기
             setTimeout(() => {
                 notification.style.display = 'none';
-                notification.textContent = '이미지 URL이 클립보드에 복사되었습니다!';
             }, 3000);
             
             console.log('이미지 URL이 클립보드에 복사되었습니다.');
+            window.open(imageUrl, '_blank');
         })
         .catch(err => {
             console.error('클립보드 복사 실패:', err);
             alert('이미지 URL 복사에 실패했습니다.');
-        });
-}
-
-// NFC용 작은 URL 생성
-function copySmallImageUrl() {
-    const canvas = document.getElementById('canvas');
-    
-    // 더 작은 크기의 캔버스 생성
-    const smallerCanvas = document.createElement('canvas');
-    const smallerCtx = smallerCanvas.getContext('2d');
-    
-    // 크기를 대폭 축소 (NFC에 맞게)
-    smallerCanvas.width = 300; // 300px 너비
-    smallerCanvas.height = 400; // 400px 높이
-    
-    // 원본 캔버스 내용을 축소하여 그리기
-    smallerCtx.drawImage(canvas, 0, 0, smallerCanvas.width, smallerCanvas.height);
-    
-    // 낮은 품질의 JPEG로 변환
-    const imageUrl = smallerCanvas.toDataURL('image/jpeg', 0.3); // 품질 30%로 설정
-    
-    // 클립보드에 URL 복사
-    navigator.clipboard.writeText(imageUrl)
-        .then(() => {
-            const notification = document.getElementById('copyNotification');
-            notification.textContent = 'NFC용 작은 URL이 복사되었습니다!';
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        })
-        .catch(err => {
-            console.error('URL 복사 실패:', err);
-            alert('URL 복사에 실패했습니다.');
         });
 }
 
