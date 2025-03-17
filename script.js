@@ -1,7 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let image = new Image();
-image.crossOrigin = "Anonymous";  // 중요: CORS 설정 추가
 image.src = 'd.jpg'; // 기본 이미지 파일 경로
 
 image.onload = () => {
@@ -126,64 +125,6 @@ function copyImageUrl() {
             console.error('클립보드 복사 실패:', err);
             alert('이미지 URL 복사에 실패했습니다.');
         });
-}
-
-// 이미지 업로드 및 URL 생성 함수
-function uploadToImgBB() {
-  // 먼저 캔버스에 텍스트를 그립니다 (기존 drawCanvas 함수 기능 포함)
-  drawCanvas();
-  
-  // 캔버스 요소 가져오기
-  const canvas = document.getElementById('canvas');
-  
-  // 사용자에게 업로드 중임을 알립니다
-  document.getElementById('copyNotification').style.display = 'block';
-  document.getElementById('copyNotification').textContent = '이미지 업로드 중...';
-  
-  // 캔버스를 PNG 형식의 Blob 객체로 변환
-  canvas.toBlob(function(blob) {
-    // FormData 객체 생성 (파일 업로드용)
-    const formData = new FormData();
-    formData.append('image', blob);
-    
-    // ImgBB API로 이미지 업로드 요청
-    fetch('https://api.imgbb.com/1/upload?key=29307367a8c33b0ed8a20848032f3982', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('서버 응답이 올바르지 않습니다.');
-      }
-      return response.json();
-    })
-    .then(data => {
-      // 업로드 성공 시 이미지 URL 받기
-      const imageUrl = data.data.url;
-      
-      // URL을 클립보드에 복사
-      navigator.clipboard.writeText(imageUrl)
-        .then(() => {
-          // 성공 메시지 표시
-          document.getElementById('copyNotification').textContent = '이미지 URL이 클립보드에 복사되었습니다!';
-          setTimeout(() => {
-            document.getElementById('copyNotification').style.display = 'none';
-          }, 3000);
-        })
-        .catch(err => {
-          console.error('클립보드 복사 실패:', err);
-          document.getElementById('copyNotification').textContent = '클립보드 복사 실패, URL: ' + imageUrl;
-        });
-    })
-    .catch(error => {
-      // 에러 처리
-      console.error('오류:', error);
-      document.getElementById('copyNotification').textContent = '이미지 업로드 실패: ' + error.message;
-      setTimeout(() => {
-        document.getElementById('copyNotification').style.display = 'none';
-      }, 3000);
-    });
-  }, 'image/png', 0.9); // 이미지 품질 0.9로 설정
 }
 
 // 페이지 로드 시 기본값 설정
