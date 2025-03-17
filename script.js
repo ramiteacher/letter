@@ -99,6 +99,33 @@ function drawText() {
     }
 }
 
+// 이미지 URL 복사 기능
+function copyImageUrl() {
+    const canvas = document.getElementById('canvas');
+    
+    // 캔버스를 이미지 URL로 변환 (png 형식)
+    const imageUrl = canvas.toDataURL('image/png');
+    
+    // 클립보드에 URL 복사
+    navigator.clipboard.writeText(imageUrl)
+        .then(() => {
+            // 복사 성공 알림 표시
+            const notification = document.getElementById('copyNotification');
+            notification.style.display = 'block';
+            
+            // 3초 후 알림 숨기기
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+            
+            console.log('이미지 URL이 클립보드에 복사되었습니다.');
+        })
+        .catch(err => {
+            console.error('클립보드 복사 실패:', err);
+            alert('이미지 URL 복사에 실패했습니다.');
+        });
+}
+
 // 페이지 로드 시 기본값 설정
 window.onload = function() {
     // 폰트 크기 설정
