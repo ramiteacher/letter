@@ -195,8 +195,16 @@
             </div>
         </div>
     </div>
-    <button onclick="drawCanvas()">텍스트 추가</button>
+    <div class="button-group">
+        <button onclick="drawCanvas()">텍스트 추가</button>
+        <button id="copyUrlButton" onclick="copyImageUrl()">이미지 URL 복사</button>
+    </div>
     <canvas id="canvas" width="600" height="800"></canvas>
+    
+    <!-- 복사 성공 알림 메시지 -->
+    <div id="copyNotification" style="display: none; margin-top: 10px; padding: 8px; background-color: #4CAF50; color: white; border-radius: 4px;">
+        이미지 URL이 클립보드에 복사되었습니다!
+    </div>
 
     <script src="script.js"></script>
 </body>
