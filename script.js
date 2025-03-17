@@ -1,6 +1,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let image = new Image();
+image.crossOrigin = "Anonymous";  // 중요: CORS 설정 추가
 image.src = 'd.jpg'; // 기본 이미지 파일 경로
 
 image.onload = () => {
