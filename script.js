@@ -119,7 +119,6 @@ function copyImageUrl() {
             }, 3000);
             
             console.log('이미지 URL이 클립보드에 복사되었습니다.');
-            window.open(imageUrl, '_blank');
         })
         .catch(err => {
             console.error('클립보드 복사 실패:', err);
