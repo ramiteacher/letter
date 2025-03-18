@@ -119,11 +119,93 @@ function copyImageUrl() {
             }, 3000);
             
             console.log('이미지 URL이 클립보드에 복사되었습니다.');
+            window.open(imageUrl, '_blank');
         })
         .catch(err => {
             console.error('클립보드 복사 실패:', err);
             alert('이미지 URL 복사에 실패했습니다.');
         });
+}
+
+// ImgBB로 이미지 업로드하고 URL 복사 및 이동하는 함수
+function uploadToImgBB() {
+    // 캔버스에 텍스트 업데이트
+    drawCanvas();
+    
+    // 사용자에게 알림
+    const notification = document.getElementById('copyNotification');
+    notification.textContent = '이미지 업로드 중...';
+    notification.style.display = 'block';
+    
+    // 백그라운드가 로딩될 시간을 주기 위해 약간 대기
+    setTimeout(() => {
+        // 캔버스 데이터를 base64로 변환
+        const dataUrl = canvas.toDataURL('image/png');
+        
+        // ImgBB API 요청용 폼데이터 준비
+        const formData = new FormData();
+        formData.append('image', dataUrl.split(',')[1]); // Base64 데이터만 추출
+        
+        // ImgBB API 키 - 여기에 본인의 API 키를 입력하세요
+        const apiKey = '29307367a8c33b0ed8a20848032f3982'; 
+        
+        // ImgBB API에 업로드 요청
+        fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('업로드 실패: 서버 응답 오류');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // 성공 시 이미지 URL 가져오기
+                const imageUrl = data.data.url;
+                
+                // 클립보드에 URL 복사
+                navigator.clipboard.writeText(imageUrl)
+                    .then(() => {
+                        // 알림 메시지 업데이트
+                        notification.innerHTML = `
+                            이미지 URL이 클립보드에 복사되었습니다!<br>
+                            <a href="${imageUrl}" target="_blank" 
+                               style="color: white; text-decoration: underline; margin-top: 5px; display: inline-block;">
+                               이미지로 바로 이동하기
+                            </a>
+                        `;
+                        
+                        // 5초 후 알림 숨기기
+                        setTimeout(() => {
+                            notification.style.display = 'none';
+                        }, 5000);
+                    })
+                    .catch(err => {
+                        console.error('클립보드 복사 실패:', err);
+                        notification.innerHTML = `
+                            클립보드 복사 실패.<br>
+                            <a href="${imageUrl}" target="_blank" 
+                               style="color: white; text-decoration: underline;">
+                               여기를 클릭하여 이미지로 이동
+                            </a>
+                        `;
+                    });
+            } else {
+                throw new Error('업로드 실패: ' + (data.error?.message || '알 수 없는 오류'));
+            }
+        })
+        .catch(error => {
+            console.error('오류:', error);
+            notification.textContent = '이미지 업로드 실패: ' + error.message;
+            
+            // 3초 후 알림 숨기기
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        });
+    }, 300); // 300ms 딜레이로 캔버스가 완전히 그려진 후 실행
 }
 
 // 페이지 로드 시 기본값 설정
